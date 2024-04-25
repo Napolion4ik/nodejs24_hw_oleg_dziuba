@@ -1,36 +1,31 @@
-const redColor = "\x1b[31m";
-const orangeColor = "\x1b[33m";
-const blueColor = "\x1b[34m";
-const resetColor = "\x1b[0m";
+const colors = require("colors");
+const config = require("config");
 
 function logger(identifier) {
-	const info = (text) => {
-		console.info(
-			blueColor,
-			`-------------------------------${resetColor}\n`
-		);
-		console.info(`${identifier}: ${blueColor} ${text}`);
-		console.info(blueColor, "\n-------------------------------");
+	config.get("colorsEnabled") ? null : colors.disable();
+
+	const info = (...text) => {
+		if (config.get("logLevel") === "info") {
+			console.log(`-------------------------------\n`.rainbow);
+			console.log(identifier.green.bgCyan, ": ", text.join(" | "));
+			console.log("\n-------------------------------".rainbow);
+		}
 	};
 
-	const warn = (text) => {
-		console.warn(
-			orangeColor,
-			`------------------------------- ${resetColor}\n`
-		);
-		console.warn(`${identifier}: ${orangeColor} ${text}`);
-		console.warn(orangeColor, "\n-------------------------------");
+	const warn = (...text) => {
+		if (
+			config.get("logLevel") === "info" ||
+			config.get("logLevel") === "warn"
+		) {
+			console.warn(`---------------------------------\n`.rainbow);
+			console.warn(identifier.bgYellow.cyan, ": ", text.join(" | "));
+			console.warn("\n-------------------------------".rainbow);
+		}
 	};
-	const error = (text) => {
-		console.error(
-			redColor,
-			`-------------------------------${resetColor}\n`
-		);
-		console.error(`${identifier}: ${redColor} ${text}`);
-		console.error(
-			redColor,
-			`\n-------------------------------${resetColor}`
-		);
+	const error = (...text) => {
+		console.error(`-------------------------------\n`.brightRed);
+		console.error(identifier.brightRed, ": ", text.join(" | "));
+		console.error(`\n-------------------------------`.brightRed);
 	};
 	return {
 		info,
