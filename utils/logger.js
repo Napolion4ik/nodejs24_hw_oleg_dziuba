@@ -2,7 +2,9 @@ const colors = require("colors");
 const config = require("config");
 
 function logger(identifier) {
-	config.get("colorsEnabled") ? null : colors.disable();
+	if (!config.get("colorsEnabled")) {
+		colors.disable();
+	}
 
 	const info = (...text) => {
 		if (config.get("logLevel") === "info") {
@@ -13,10 +15,7 @@ function logger(identifier) {
 	};
 
 	const warn = (...text) => {
-		if (
-			config.get("logLevel") === "info" ||
-			config.get("logLevel") === "warn"
-		) {
+		if (config.get("logLevel") !== "error") {
 			console.warn(`---------------------------------\n`.rainbow);
 			console.warn(identifier.bgYellow.cyan, ": ", text.join(" | "));
 			console.warn("\n-------------------------------".rainbow);
