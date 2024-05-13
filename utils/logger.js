@@ -5,9 +5,9 @@ const path = require("path");
 
 const logsDir = path.resolve(__dirname, "../logs");
 
-function writeLogsToFile(writeStream, message) {
+function writeLogsToFile(writeStream, message, massageServer) {
 	const date = new Date().toISOString();
-	writeStream.write(`${message}: ${date} \n`);
+	writeStream.write(`${message}: [${massageServer.join(", ")}] ${date} \n`);
 }
 
 let initialized = false;
@@ -36,7 +36,7 @@ function logger(identifier) {
 	}
 
 	const info = (...text) => {
-		writeLogsToFile(writeableStreamInfo, "Info logger");
+		writeLogsToFile(writeableStreamInfo, "Info logger", text);
 		if (config.get("logLevel") === "info") {
 			console.log(`-------------------------------\n`.rainbow);
 			console.log(identifier.green.bgCyan, ": ", text.join(" | "));
@@ -45,7 +45,7 @@ function logger(identifier) {
 	};
 
 	const warn = (...text) => {
-		writeLogsToFile(writeableStreamError, "Warn logger");
+		writeLogsToFile(writeableStreamError, "Warn logger", text);
 		if (config.get("logLevel") !== "error") {
 			console.warn(`---------------------------------\n`.rainbow);
 			console.warn(identifier.bgYellow.cyan, ": ", text.join(" | "));
@@ -53,7 +53,7 @@ function logger(identifier) {
 		}
 	};
 	const error = (...text) => {
-		writeLogsToFile(writeableStreamError, "Error logger");
+		writeLogsToFile(writeableStreamError, "Error logger", text);
 		console.error(`-------------------------------\n`.brightRed);
 		console.error(identifier.brightRed, ": ", text.join(" | "));
 		console.error(`\n-------------------------------`.brightRed);

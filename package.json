@@ -6,6 +6,8 @@
 	"scripts": {
 		"start": "node main.js",
 		"start:dev": "nodemon main.js",
+		"start:server": "node server.js",
+		"start:server-dev": "nodemon server.js",
 		"start:cross": "cross-env LOG_LEVEL=error  nodemon main.js"
 	},
 	"author": "dziubaoleg20@gmail.com",
