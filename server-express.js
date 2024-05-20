@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const config = require("config");
+const fs = require("fs");
 const morgan = require("morgan");
 const path = require("path");
 const rfs = require("rotating-file-stream");
@@ -15,11 +16,13 @@ morgan.token("date", () => {
 	return new Date().toISOString();
 });
 
-const logDirection = path.join(__dirname, "logs");
+const logDirectory = path.join(__dirname, "logs");
+
+fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
 
 const accessLogStream = rfs.createStream("access.log", {
 	interval: "1d",
-	path: logDirection,
+	path: logDirectory,
 	compress: true,
 });
 
