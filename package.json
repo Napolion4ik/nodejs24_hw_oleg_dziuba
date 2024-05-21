@@ -8,17 +8,23 @@
 		"start:dev": "nodemon main.js",
 		"start:server": "node server.js",
 		"start:server-dev": "nodemon server.js",
+		"start:express": "nodemon --inspect server-express.js",
 		"start:cross": "cross-env LOG_LEVEL=error  nodemon main.js"
 	},
 	"author": "dziubaoleg20@gmail.com",
 	"license": "ISC",
 	"devDependencies": {
 		"colors": "^1.4.0",
+		"file-stream-rotator": "^1.0.0",
+		"morgan": "^1.10.0",
 		"nodemon": "^3.1.0"
 	},
 	"dependencies": {
 		"config": "^3.3.11",
 		"cross-env": "^7.0.3",
-		"dotenv": "^16.4.5"
+		"dotenv": "^16.4.5",
+		"express": "^4.19.2",
+		"rotating-file-stream": "^3.2.1",
+		"yup": "^1.4.0"
 	}
 }
