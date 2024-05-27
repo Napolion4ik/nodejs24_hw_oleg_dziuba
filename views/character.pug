@@ -1,0 +1,10 @@
+extends templates/head.pug
+block content
+     .container 
+          h1 #{character.name}
+          div.person-block
+               p.desc-text Почта
+               h2 #{character.email} 
+               p.desc-text Опис
+               p #{character.description}
+               button(onClick=`() => console.log("DDWDW"); deleteCharacter(${character.id})`).button-delete Видалити

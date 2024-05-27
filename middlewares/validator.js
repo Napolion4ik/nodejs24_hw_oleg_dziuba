@@ -1,7 +1,7 @@
 const yup = require("yup");
 
 const userShema = yup.object({
-	username: yup
+	name: yup
 		.string()
 		.matches(/^[a-zA-Z]+$/, "Username must contain only letters")
 		.required("Username is required"),
