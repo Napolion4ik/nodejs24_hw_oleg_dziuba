@@ -1,0 +1,26 @@
+extends templates/head.pug
+block content
+     section
+          .container
+               h1 Персонажі роману "Острів скарбів"
+               table
+                    thead 
+                         tr 
+                              th Name
+                              th Email
+                              th Description
+               
+                    tbody 
+                         each character in characters
+                              tr 
+                                   td 
+                                        a(href=character.id)  #{character.name}
+                                   td #{character.email}
+                                   td #{character.description}
+               form(method="post" action="/")
+                    input(type="text" name="name" required minlenght="2"  placeholder="Ім'я")
+                    input(type="text" name="email" required  placeholder="Почта")
+                    textarea(name="description" required ) 
+                    button(type="submit") Додати
+
+
